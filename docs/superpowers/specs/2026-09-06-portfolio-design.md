@@ -205,22 +205,79 @@ No color may have its only definition inside a media or `[data-theme]` block.
 
 ### 5.4 Typography
 
-The same three faces as the CV, re-proportioned so monospace dominates:
+**Two families, not three.**
 
-- **Newsreader** — display, used sparingly
-- **Public Sans** — body
-- **IBM Plex Mono** — all structural labels, frame headers, metadata, stack
-  addresses
+- **IBM Plex Mono** — *display.* Set large, for the name, section headers, and
+  anything genuinely machine-rendered: frame headers, stack depth, dates, the
+  event-loop tick.
+- **Public Sans** — body copy and all prose.
 
-Loaded from Google Fonts with real fallback stacks. Running text near 65
-characters. `text-wrap: balance` on headings. `font-variant-numeric:
-tabular-nums` wherever dates or counts align.
+Newsreader is retired for the site. Two of the CV's three faces remain, so the
+family resemblance holds without a third voice.
+
+**The reasoning matters more than the list.** Shrinking a monospace face down
+to caption small data labels is one of the commonest markers of a generated
+page. This inverts it: monospace runs at *display* scale, where it reads as the
+page's voice rather than as chrome, and it is spent only on content that a
+runtime would actually render. Prose stays in a face built for reading.
+
+Loaded from Google Fonts with real fallback stacks. Running text under 80
+characters, nearer 65 for the sans. `text-wrap: balance` on headings.
+`font-variant-numeric: tabular-nums` wherever dates or counts align.
+
+**Prohibited**, as generic template chrome: tracked-out ALL-CAPS eyebrow labels
+above headings; meta strings joined with middle dots; a `→` appended to link or
+button text; accenting a single word inside a headline.
 
 ### 5.5 Layout
 
 A fixed left instrument rail reports current runtime state as the reader
-scrolls (active section, stack depth, event-loop tick). Main column centred at
-~65ch. Below 900px the rail collapses to a slim top status bar.
+scrolls (active section, stack depth, event-loop tick). Main column left
+aligned. Below 900px the rail collapses to a slim top status bar.
+
+**Depth is encoded tonally, not with borders.** The executing frame sits at
+full contrast on `--sheet`; each frame further down the stack steps down one
+level in contrast, toward `--ink-2` then `--ink-3` on progressively flatter
+grounds.
+
+This does three things at once. It is what a debugger actually does — inactive
+frames dim. It makes visual depth carry stack depth, so the structure is
+information rather than decoration. And a recruiter needs no explanation to
+read it: the most recent role is the most prominent thing on screen.
+
+It also removes the reason to reach for a rule or a card as the default
+separator, which is what made the earlier composition read as generic
+broadsheet.
+
+Cards, borders and radius are spent by role, not applied uniformly: heap
+objects are raised surfaces because they are discrete allocations; stack frames
+are not, because they are contiguous.
+
+**Stack lists render as array literals** — `['Spring Boot', 'React',
+'FastAPI']` — rather than as middle-dot meta strings. Data rendered as data,
+in the notation the subject already uses.
+
+### 5.6 Anti-default audit
+
+The design was reviewed against the catalogue of visual defaults that mark a
+page as machine-generated. Recorded here so the check is not repeated from
+scratch, and so the exceptions are justified rather than assumed.
+
+| Default | Verdict |
+|---|---|
+| Near-black ground with one neon accent | Rejected in §5.1. |
+| Monospace shrunk for small data labels | **Changed.** Inverted — mono at display scale (§5.4). |
+| Meta strings joined with middle dots | **Changed.** Array-literal notation (§5.5). |
+| Broadsheet hairline rules and dense columns | **Changed.** Tonal recession replaces rules (§5.5). |
+| Tracked-out ALL-CAPS eyebrow labels | Prohibited (§5.4). |
+| `→` appended to link text | Prohibited (§5.4). |
+| Uniform rounded cards with one shadow | Prohibited — surfaces spent by role (§5.5). |
+| Warm cream + serif display + terracotta accent | **Does not apply.** `#F6F7F4` is cool and green-biased, not warm cream; the accent is deep green, not clay. |
+| Fade-and-slide-up on every section | Rejected in §6 — one orchestrated moment only. |
+
+The palette is additionally exempt from free-choice critique: it is inherited
+from an already-approved CV in circulation, and continuity across the two
+artifacts is a stated goal (§5.2), not an unconsidered default.
 
 ---
 
@@ -420,6 +477,8 @@ serve the success criteria.
 | First screen | Cold start boot, under 1.5s | Live REPL; motionless engine diagram |
 | Host | GitHub Pages user site | Firebase (dead URL); Vercel |
 | Palette | CV identity + amber "executing" | Near-black + neon green terminal |
+| Typography | Two families; mono at display scale | Three families; mono as small data labels |
+| Depth encoding | Tonal recession of stack frames | Hairline rules; uniform cards |
 | Portrait | WebP q88 inlined as data URI | Separate file request; upscaled hero |
 | 2021 overlap | Rendered honestly as concurrent lanes | Flattened to a clean linear stack |
 | Duration claim | 5+ years (measured) | 7+ years (unsupported by dates) |
