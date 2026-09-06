@@ -86,7 +86,7 @@ Authoritative employment history, taken from LinkedIn and superseding the CV
 | Virtuera | Internship, remote | Frontend Web Developer | Dec 2020 – Apr 2021 | Mumbai, Maharashtra, India |
 | HW Saver LLP | Internship, remote | Frontend Web Developer | Jan 2021 – Oct 2021 | Uttar Pradesh, India |
 | CogniAble | Full-time, remote | React Developer | Apr 2021 – Oct 2021 | Gurugram, Haryana, India |
-| Penta Global Limited | Full-time, onsite | Frontend Web Developer → Full Stack Engineer | Sep 2021 – present | Gulshan, Dhaka, Bangladesh |
+| Penta Global Limited | Full-time, onsite | Frontend Web Developer (Sep 2021 – Feb 2024) → Full Stack Engineer (Feb 2024 – present) | Sep 2021 – present | Gulshan, Dhaka, Bangladesh |
 
 ```
  2020-12   2021-01      2021-04        2021-09  2021-10                2026-09
@@ -117,8 +117,12 @@ be explained away.
 
 ### 3.3 The Penta promotion
 
-Penta is one frame with two roles: Frontend Web Developer from Sep 2021, and
-Full Stack Engineer from roughly Sep 2024.
+Penta is one frame with two roles: **Frontend Web Developer** from Sep 2021,
+and **Full Stack Engineer** from **Feb 2024**.
+
+The site states these dates and does not characterise the interval. Sep 2021 to
+Feb 2024 is 2 years 5 months, so a phrase like "after three years" would be
+inaccurate; the dates carry the point without it.
 
 This must be visible rather than flattened to the current title. "Full Stack
 Engineer since 2021" reads as five static years; "joined as frontend,
@@ -533,9 +537,33 @@ than the portfolio itself.
 ## 13. Out of scope (YAGNI)
 
 Blog, CMS, contact form backend, analytics, internationalisation, custom
-domain, downloadable-CV generation on the client, and any live GitHub API
-integration. The site is static content about a fixed history; none of these
-serve the success criteria.
+domain, client-side PDF *generation*, and any live GitHub API integration. The
+site is static content about a fixed history; none of these serve the success
+criteria.
+
+Downloading the CV is **in** scope — see §13.1. What is excluded is generating
+the PDF in the browser, which is unnecessary when a built file can simply be
+served.
+
+### 13.1 CV download
+
+The identity section carries a download control pointing at the corrected CV
+PDF, exposed as a single constant `CV_URL` in `src/data/cv.ts`.
+
+**Default: the PDF ships with the site**, served from the same origin at
+`https://a1barif2h.github.io/cv.pdf` (committed to `public/cv.pdf`, copied
+verbatim into `dist/` at build).
+
+Chosen over a Google Drive share link because it downloads immediately with no
+preview interstitial and no sign-in prompt, depends on no third party, cannot
+break when a sharing permission changes, and is versioned in the same commit as
+the page — so the CV and the site can never fall out of sync.
+
+Because it is one constant, repointing `CV_URL` at a Drive share link is a
+one-line change if that is preferred later.
+
+The PDF served here is the *corrected* CV from §12, not the current one. The
+download must not ship before those corrections land.
 
 ---
 
@@ -551,6 +579,7 @@ serve the success criteria.
 | Palette | CV identity + amber "executing" | Near-black + neon green terminal |
 | Typography | Two families; mono at display scale | Three families; mono as small data labels |
 | Depth encoding | Tonal recession of stack frames | Hairline rules; uniform cards |
+| CV download | PDF served from the site's own origin | Google Drive share link; client-side PDF generation |
 | Portrait | WebP q88 inlined as data URI | Separate file request; upscaled hero |
 | 2021 overlap | Rendered honestly as concurrent lanes | Flattened to a clean linear stack |
 | Duration claim | 5+ years (derived from dates) | 7+ years (unsupported by dates) |
