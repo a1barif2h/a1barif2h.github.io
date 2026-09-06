@@ -1,3 +1,9 @@
+import Identity from './components/Identity';
+
 export default function App() {
-  return <h1>Mohammad Arif Hossain</h1>;
+  return (
+    <main>
+      <Identity />
+    </main>
+  );
 }
