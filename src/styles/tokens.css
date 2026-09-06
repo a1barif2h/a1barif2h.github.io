@@ -1,0 +1,50 @@
+:root {
+  --paper: #F6F7F4;
+  --sheet: #FFFFFF;
+  --ink: #16201C;
+  --ink-2: #4A554F;
+  --ink-3: #77827B;
+  --rule: #D7DDD6;
+  --rule-soft: #E7EBE5;
+  --accent: #1E5B45;
+  --accent-2: #2F7A5E;
+  --live: #B4741A;
+  --live-wash: #FBF2E2;
+
+  --f-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --f-body: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+
+  --rail: 190px;
+  --measure: 65ch;
+  --step: 0.35rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0F1411;
+    --sheet: #161C18;
+    --ink: #E6EBE6;
+    --ink-2: #A8B3AC;
+    --ink-3: #78837C;
+    --rule: #2A332D;
+    --rule-soft: #212823;
+    --accent: #6FBF97;
+    --accent-2: #4FA37B;
+    --live: #E0A44A;
+    --live-wash: #2A2115;
+  }
+}
+
+:root[data-theme="dark"] {
+  --paper: #0F1411;
+  --sheet: #161C18;
+  --ink: #E6EBE6;
+  --ink-2: #A8B3AC;
+  --ink-3: #78837C;
+  --rule: #2A332D;
+  --rule-soft: #212823;
+  --accent: #6FBF97;
+  --accent-2: #4FA37B;
+  --live: #E0A44A;
+  --live-wash: #2A2115;
+}
