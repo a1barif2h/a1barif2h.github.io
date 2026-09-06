@@ -76,20 +76,59 @@ positions, recalculated on resize. Pointer lines are progressive enhancement:
 with JavaScript disabled or motion reduced, each project still names its
 employer in text.
 
-### 3.2 The 2021 concurrency
+### 3.2 The 2020–21 parallel region
 
-HW Saver LLP (31/12/2020 – 10/07/2021) and CogniAble (22/04/2021 – 20/09/2021)
-overlap by roughly three months. This is factually correct: two internships were
-held concurrently, and CogniAble subsequently converted the role to full-time
-remote.
+Authoritative employment history, taken from LinkedIn and superseding the CV
+(see §12):
 
-A call stack cannot hold two simultaneously executing frames, and an engineer
-will notice. Rather than flattening the history to protect the metaphor, that
-stack level **splits into two parallel lanes**, labelled as concurrent, with
-CogniAble's conversion to full-time marked on its lane.
+| Employer | Engagement | Role | Period | Location |
+|---|---|---|---|---|
+| Virtuera | Internship, remote | Frontend Web Developer | Dec 2020 – Apr 2021 | Mumbai, Maharashtra, India |
+| HW Saver LLP | Internship, remote | Frontend Web Developer | Jan 2021 – Oct 2021 | Uttar Pradesh, India |
+| CogniAble | Full-time, remote | React Developer | Apr 2021 – Oct 2021 | Gurugram, Haryana, India |
+| Penta Global Limited | Full-time, onsite | Frontend Web Developer → Full Stack Engineer | Sep 2021 – present | Gulshan, Dhaka, Bangladesh |
 
-This is a deliberate inversion: the apparent flaw becomes the most distinctive
-detail on the page, and it demonstrates the honesty the rest of the CV claims.
+```
+ 2020-12   2021-01      2021-04        2021-09  2021-10                2026-09
+    │         │            │              │        │                      │
+    ├ Virtuera ────────────┤              │        │
+    │         ├ HW Saver ───────────────────────────┤
+    │         │            ├ CogniAble ──────────────┤
+    │         │            │              ├ Penta ──────────────────────▶
+```
+
+Four roles across ten months, with a peak of **three held simultaneously** in
+Sep–Oct 2021.
+
+A call stack cannot hold concurrent frames, and an engineer will notice. But
+that period genuinely *was* concurrent, so it is not modelled as stack frames
+at all. It renders as a **parallel region that settled** — four tasks
+initiated, all resolved by Oct 2021, after which the Penta frame was pushed and
+has been executing since.
+
+This is the correct mapping rather than a workaround. The stack holds one
+executing frame; everything beneath it is a settled parallel region, drawn as
+overlapping lanes on a shared time axis so the overlaps are visible rather than
+implied.
+
+Presented as what it is: ten months of running up to three jobs at once while
+breaking into the industry. That reads as evidence, not as an inconsistency to
+be explained away.
+
+### 3.3 The Penta promotion
+
+Penta is one frame with two roles: Frontend Web Developer from Sep 2021, and
+Full Stack Engineer from roughly Sep 2024.
+
+This must be visible rather than flattened to the current title. "Full Stack
+Engineer since 2021" reads as five static years; "joined as frontend,
+promoted to full stack after three years" is evidence of progression *and*
+explains the shape of the skills tiers — deep frontend proficiency with backend
+added later. Flattening it discards the strongest structural signal in the
+history.
+
+Rendered inside the single Penta frame as a role transition on its own
+timeline, not as two separate employers.
 
 ---
 
@@ -104,15 +143,21 @@ Shape:
 ```ts
 type Tier = 'proficient' | 'comfortable' | 'familiar';
 
+interface Role {
+  title: string;
+  start: string;           // ISO 'YYYY-MM'
+  end: string | null;      // null = current
+}
+
 interface Employment {
   id: string;              // referenced by Project.employmentId
   company: string;
   location: string;
-  role: string;
-  start: string;           // ISO
+  engagement: 'full-time' | 'internship';
+  mode: 'onsite' | 'remote';
+  roles: Role[];           // more than one = promotion within the employer
+  start: string;
   end: string | null;      // null = executing
-  concurrentWith?: string; // employment id, for the 2021 lanes
-  note?: string;           // e.g. 'converted to full-time remote'
   points: string[];
 }
 
@@ -127,14 +172,19 @@ interface Project {
 }
 ```
 
-### 4.1 Experience duration
+### 4.1 Derived values, not hand-maintained ones
 
-Stated as **5+ years**, computed from the earliest start date (31/12/2020),
-which is 5.68 years as of 2026-09-06.
+Two things are **computed from the dates**, never written by hand:
 
-This deliberately supersedes the "7+ years" currently on the CV. See §12 —
-the CV must be corrected in the same change, because a site saying 5+ beside a
-CV saying 7+ is worse than either figure alone.
+- **Overlaps.** Which roles ran concurrently, and the peak concurrency count,
+  are derived by interval comparison. A hand-set `concurrentWith` field would
+  drift the moment a date changed; deriving it means the timeline cannot lie.
+- **Experience duration.** Measured from the earliest start (Dec 2020), which
+  is 5.8 years as of 2026-09-06, and stated as **5+ years**.
+
+This supersedes the "7+ years" currently on the CV. See §12 — the CV must be
+corrected in the same change, because a site saying 5+ beside a CV saying 7+
+is worse than either figure alone.
 
 ---
 
@@ -430,7 +480,14 @@ Vitest + React Testing Library.
 **Data integrity** — every employment entry has the required fields; dates
 parse; entries are ordered descending by start date; every `Project.employmentId`
 resolves to a real employment id (this is what keeps the stack→heap pointers
-from ever dangling).
+from ever dangling); every employment's `roles` cover its full span with no gap
+and no overlap between successive roles.
+
+**Derived values** — the overlap computation reports the four known concurrent
+pairs and a peak concurrency of three in Sep–Oct 2021; the duration derives to
+5+ years from Dec 2020. These are asserted against the dates rather than
+hard-coded, so a date correction fails the test rather than silently producing
+a wrong claim.
 
 **Rendering** — the call stack renders newest-first; exactly one frame is marked
 executing; the concurrent 2021 lanes render side by side.
@@ -455,6 +512,21 @@ undone makes the CV actively wrong:
    the Google Doc. The CV currently advertises a broken link.
 2. **Experience duration.** "7+ years" → "5+ years" in the summary, matching
    §4.1. A site and a CV stating different figures is worse than either.
+3. **Employment history.** The CV's employment section is factually wrong in
+   four ways and must be rebuilt from §3.2:
+   - **Virtuera is missing entirely** — a whole employer absent from the record.
+   - **HW Saver end date** is 10/07/2021 on the CV; actual is Oct 2021.
+   - **CogniAble** is listed as "Front-end web developer" ending 20/09/2021;
+     actual is **React Developer**, full-time, ending Oct 2021.
+   - **The Penta promotion is unrecorded.** The CV shows a flat "Full Stack
+     Engineer" since 2021; actual is Frontend Web Developer from Sep 2021,
+     promoted to Full Stack Engineer around Sep 2024.
+
+Item 3 is the reason this list is non-optional. A recruiter cross-checking the
+CV against LinkedIn — which is routine — currently finds a missing employer and
+two wrong end dates. That reads as carelessness at best. Correcting it is the
+single highest-value change in this whole piece of work, and it is worth more
+than the portfolio itself.
 
 ---
 
@@ -481,4 +553,7 @@ serve the success criteria.
 | Depth encoding | Tonal recession of stack frames | Hairline rules; uniform cards |
 | Portrait | WebP q88 inlined as data URI | Separate file request; upscaled hero |
 | 2021 overlap | Rendered honestly as concurrent lanes | Flattened to a clean linear stack |
-| Duration claim | 5+ years (measured) | 7+ years (unsupported by dates) |
+| Duration claim | 5+ years (derived from dates) | 7+ years (unsupported by dates) |
+| Early career | Parallel region that settled | Stack frames; flattening the overlaps |
+| Penta title | Promotion shown as a role transition | Flat "Full Stack Engineer since 2021" |
+| Concurrency data | Derived from intervals | Hand-set `concurrentWith` fields |
