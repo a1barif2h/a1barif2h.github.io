@@ -1,0 +1,43 @@
+.heap {
+  display: grid;
+  gap: calc(var(--step) * 4);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  margin-top: calc(var(--step) * 4);
+}
+
+.obj {
+  background: var(--sheet);
+  border: 1px solid var(--rule);
+  padding: calc(var(--step) * 4);
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.obj[data-active] {
+  border-color: var(--live);
+  box-shadow: 0 0 0 1px var(--live);
+}
+
+.obj h3 { font-size: 1.02rem; }
+
+.obj-meta, .obj-alloc {
+  font-size: 0.76rem;
+  color: var(--ink-3);
+  margin: calc(var(--step)) 0 0;
+}
+
+.obj-stack {
+  font-size: 0.74rem;
+  color: var(--accent);
+  margin: calc(var(--step) * 3) 0 0;
+  white-space: nowrap;
+  padding-bottom: calc(var(--step));
+}
+
+.obj-features {
+  margin: calc(var(--step) * 3) 0 0;
+  padding-left: 1.1rem;
+  font-size: 0.92rem;
+  color: var(--ink-2);
+}
+
+.obj-features li { margin-top: calc(var(--step) * 2); }
