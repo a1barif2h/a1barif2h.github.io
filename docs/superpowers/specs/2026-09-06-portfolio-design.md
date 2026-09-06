@@ -83,22 +83,34 @@ Authoritative employment history, taken from LinkedIn and superseding the CV
 
 | Employer | Engagement | Role | Period | Location |
 |---|---|---|---|---|
-| Virtuera | Internship, remote | Frontend Web Developer | Dec 2020 – Apr 2021 | Mumbai, Maharashtra, India |
-| HW Saver LLP | Internship, remote | Frontend Web Developer | Jan 2021 – Oct 2021 | Uttar Pradesh, India |
+| Virtuera | Internship, **part-time**, remote | Frontend Web Developer | Dec 2020 – Apr 2021 | Mumbai, Maharashtra, India |
+| HW Saver LLP | Internship, **part-time**, remote | Frontend Web Developer | Jan 2021 – Oct 2021 | Uttar Pradesh, India |
 | CogniAble | Full-time, remote | React Developer | Apr 2021 – Oct 2021 | Gurugram, Haryana, India |
 | Penta Global Limited | Full-time, onsite | Frontend Web Developer (Sep 2021 – Feb 2024) → Full Stack Engineer (Feb 2024 – present) | Sep 2021 – present | Gulshan, Dhaka, Bangladesh |
 
 ```
  2020-12   2021-01      2021-04        2021-09  2021-10                2026-09
     │         │            │              │        │                      │
-    ├ Virtuera ────────────┤              │        │
-    │         ├ HW Saver ───────────────────────────┤
-    │         │            ├ CogniAble ──────────────┤
-    │         │            │              ├ Penta ──────────────────────▶
+    ┈ Virtuera ┈┈┈┈┈┈┈┈┈┈┈┈┤              │        │       part-time
+    │         ┈ HW Saver ┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┤       part-time
+    │         │            ├ CogniAble ──────────────┤      full-time
+    │         │            │              ├ Penta ──────────────────────▶  full-time
+
+    ┈┈┈ part-time      ─── full-time      ▶ executing
 ```
 
-Four roles across ten months, with a peak of **three held simultaneously** in
-Sep–Oct 2021.
+Four roles across eleven months. Five pairs of them overlap, and **three were
+held simultaneously twice**: in Apr 2021 (Virtuera, HW Saver, CogniAble) and
+again in Sep–Oct 2021 (HW Saver, CogniAble, Penta).
+
+**Commitment is what makes this ordinary rather than remarkable, so the design
+encodes it.** Virtuera and HW Saver were part-time internships; only CogniAble
+and Penta were full-time. Two part-time internships beside one full-time role
+is the normal shape of breaking into the industry, not an implausible workload.
+
+Lane weight therefore carries commitment: full-time roles render as solid,
+full-height lanes, part-time as lighter half-height ones. The reader sees the
+real workload without being told, and the peak of three needs no defence.
 
 A call stack cannot hold concurrent frames, and an engineer will notice. But
 that period genuinely *was* concurrent, so it is not modelled as stack frames
@@ -157,7 +169,8 @@ interface Employment {
   id: string;              // referenced by Project.employmentId
   company: string;
   location: string;
-  engagement: 'full-time' | 'internship';
+  commitment: 'full-time' | 'part-time';   // drives lane weight
+  nature: 'internship' | 'permanent';
   mode: 'onsite' | 'remote';
   roles: Role[];           // more than one = promotion within the employer
   start: string;
@@ -184,7 +197,10 @@ Two things are **computed from the dates**, never written by hand:
   are derived by interval comparison. A hand-set `concurrentWith` field would
   drift the moment a date changed; deriving it means the timeline cannot lie.
 - **Experience duration.** Measured from the earliest start (Dec 2020), which
-  is 5.8 years as of 2026-09-06, and stated as **5+ years**.
+  is 5.8 years as of 2026-09-06, and stated as **5+ years**. The claim is
+  robust to method: counted strictly from the first *full-time* role
+  (CogniAble, Apr 2021) it is 5.4 years, which still reads as 5+. A headline
+  figure that survives either way of counting is the point.
 
 This supersedes the "7+ years" currently on the CV. See §12 — the CV must be
 corrected in the same change, because a site saying 5+ beside a CV saying 7+
@@ -487,9 +503,9 @@ resolves to a real employment id (this is what keeps the stack→heap pointers
 from ever dangling); every employment's `roles` cover its full span with no gap
 and no overlap between successive roles.
 
-**Derived values** — the overlap computation reports the four known concurrent
-pairs and a peak concurrency of three in Sep–Oct 2021; the duration derives to
-5+ years from Dec 2020. These are asserted against the dates rather than
+**Derived values** — the overlap computation reports five concurrent pairs and
+a peak concurrency of three, reached in Apr 2021 and again in Sep–Oct 2021; the
+duration derives to 5+ years from Dec 2020. These are asserted against the dates rather than
 hard-coded, so a date correction fails the test rather than silently producing
 a wrong claim.
 
@@ -522,6 +538,9 @@ undone makes the CV actively wrong:
    - **HW Saver end date** is 10/07/2021 on the CV; actual is Oct 2021.
    - **CogniAble** is listed as "Front-end web developer" ending 20/09/2021;
      actual is **React Developer**, full-time, ending Oct 2021.
+   - **Commitment is unstated.** Virtuera and HW Saver were part-time
+     internships; the CV describes HW Saver as a "Full-time remote intern",
+     which is wrong.
    - **The Penta promotion is unrecorded.** The CV shows a flat "Full Stack
      Engineer" since 2021; actual is Frontend Web Developer from Sep 2021,
      promoted to Full Stack Engineer around Sep 2024.
