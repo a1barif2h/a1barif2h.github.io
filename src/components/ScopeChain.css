@@ -1,0 +1,31 @@
+.scope-note { color: var(--ink-2); margin: calc(var(--step) * 2) 0 calc(var(--step) * 4); }
+
+.scopes { display: grid; gap: calc(var(--step) * 3); }
+
+.scope {
+  --recede: calc(var(--depth) * 15%);
+  border-left: 2px solid color-mix(in oklab, var(--accent) calc(100% - var(--recede)), var(--paper));
+  padding-left: calc(var(--step) * 4);
+}
+
+.scope-head {
+  display: flex;
+  align-items: baseline;
+  gap: calc(var(--step) * 3);
+  flex-wrap: wrap;
+}
+
+.scope h3 { font-size: 1rem; }
+.scope-kind { font-size: 0.74rem; color: var(--ink-3); }
+
+.scope-items {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--step)) calc(var(--step) * 3);
+  padding: 0;
+  margin: calc(var(--step) * 2) 0 0;
+  font-family: var(--f-mono);
+  font-size: 0.82rem;
+  color: color-mix(in oklab, var(--ink-2) calc(100% - var(--recede)), var(--paper));
+}
