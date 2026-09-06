@@ -3,7 +3,7 @@
 .scopes { display: grid; gap: calc(var(--step) * 3); }
 
 .scope {
-  --recede: calc(var(--depth) * 15%);
+  --recede: calc(var(--depth) * 10%);
   border-left: 2px solid color-mix(in oklab, var(--accent) calc(100% - var(--recede)), var(--paper));
   padding-left: calc(var(--step) * 4);
 }

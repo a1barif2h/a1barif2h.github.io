@@ -27,7 +27,7 @@ export default function HeapObject({ project, allocatedBy, active, registerRef }
           : 'independent client work, no allocating frame'}
       </p>
 
-      <p className="obj-stack mono scroll-x" data-testid="stack-literal">
+      <p className="obj-stack mono scroll-x" data-testid="stack-literal" tabIndex={0}>
         [{project.stack.map((s) => `'${s}'`).join(', ')}]
       </p>
 
