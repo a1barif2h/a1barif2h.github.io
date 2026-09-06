@@ -1,0 +1,29 @@
+.page {
+  display: grid;
+  gap: calc(var(--step) * 6);
+  padding: calc(var(--step) * 6) calc(var(--step) * 5);
+  max-width: 78rem;
+  margin: 0 auto;
+}
+
+.content {
+  position: relative;
+  display: grid;
+  gap: calc(var(--step) * 12);
+}
+
+.content > section > h2 {
+  font-size: 0.95rem;
+  color: var(--ink-3);
+  border-bottom: 1px solid var(--rule-soft);
+  padding-bottom: calc(var(--step) * 2);
+  margin-bottom: calc(var(--step) * 4);
+}
+
+@media (min-width: 900px) {
+  .page {
+    grid-template-columns: var(--rail) minmax(0, 1fr);
+    gap: calc(var(--step) * 10);
+    padding-block: calc(var(--step) * 10);
+  }
+}
