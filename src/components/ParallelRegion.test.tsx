@@ -35,4 +35,13 @@ describe('ParallelRegion', () => {
     render(<ParallelRegion />);
     expect(screen.getByText(/2020-12 to 2021-04/)).toBeInTheDocument();
   });
+
+  it('marks the ongoing role as open-ended so its clipped bar is not read as a terminus', () => {
+    render(<ParallelRegion />);
+    const lanes = screen.getAllByRole('listitem');
+    const penta = lanes.find((l) => within(l).queryByText('Penta Global Limited'))!;
+    const hwsaver = lanes.find((l) => within(l).queryByText('HW Saver LLP'))!;
+    expect(penta).toHaveAttribute('data-open');
+    expect(hwsaver).not.toHaveAttribute('data-open');
+  });
 });

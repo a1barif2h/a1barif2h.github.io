@@ -39,3 +39,7 @@
   height: 5px;
   background: color-mix(in oklab, var(--accent) 45%, var(--paper));
 }
+
+.lane[data-open] .lane-bar {
+  background: linear-gradient(to right, var(--accent), transparent);
+}

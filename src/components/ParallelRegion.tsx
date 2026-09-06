@@ -37,7 +37,12 @@ export default function ParallelRegion() {
           const span = ((end - start) / width) * 100;
 
           return (
-            <li key={e.id} className="lane" data-commitment={e.commitment}>
+            <li
+              key={e.id}
+              className="lane"
+              data-commitment={e.commitment}
+              data-open={e.end === null || undefined}
+            >
               <div className="lane-label">
                 <span className="lane-company">{e.company}</span>
                 <span className="mono lane-period">
