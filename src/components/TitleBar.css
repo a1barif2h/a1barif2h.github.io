@@ -1,0 +1,91 @@
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: stretch;
+  gap: calc(var(--step) * 3);
+  height: 44px;
+  padding-inline: calc(var(--step) * 3);
+  background: var(--chrome);
+  border-bottom: 1px solid var(--rule);
+}
+
+.bar-lights {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding-right: calc(var(--step) * 2);
+}
+.bar-lights i {
+  width: 11px; height: 11px;
+  border-radius: 50%;
+  background: var(--rule);
+}
+.bar-lights i:nth-child(1) { background: color-mix(in oklab, var(--live) 70%, var(--rule)); }
+.bar-lights i:nth-child(2) { background: color-mix(in oklab, var(--str) 45%, var(--rule)); }
+.bar-lights i:nth-child(3) { background: color-mix(in oklab, var(--fn) 55%, var(--rule)); }
+
+.bar-tabs { display: flex; align-items: stretch; }
+
+.bar-tab {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--step) * 1.5);
+  padding-inline: calc(var(--step) * 4);
+  font-size: 0.78rem;
+  color: var(--tx-3);
+  border-right: 1px solid var(--rule-soft);
+  white-space: nowrap;
+}
+.bar-tab.is-active {
+  color: var(--tx);
+  background: var(--bg);
+  box-shadow: inset 0 2px 0 var(--kw);
+}
+
+.bar-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--live);
+}
+
+.bar-actions {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--step) * 2);
+  margin-left: auto;
+}
+
+.bar-cv, .bar-ico, .bar-actions button {
+  font-family: var(--f-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  color: var(--tx-2);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 4px 9px;
+  background: transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+.bar-cv {
+  color: var(--fn);
+  border-color: color-mix(in oklab, var(--fn) 45%, transparent);
+}
+.bar-cv:hover {
+  background: color-mix(in oklab, var(--fn) 12%, transparent);
+  color: var(--fn);
+}
+.bar-ico:hover, .bar-actions button:hover {
+  color: var(--tx);
+  border-color: var(--tx-3);
+}
+
+@media (max-width: 720px) {
+  .bar-lights, .bar-tab:not(.is-active), .bar-ico { display: none; }
+  .bar { gap: calc(var(--step) * 2); padding-inline: calc(var(--step) * 2); }
+  .bar-cv, .bar-actions button { padding: 4px 7px; font-size: 0.68rem; }
+}

@@ -1,87 +1,101 @@
-import { useCallback, useLayoutEffect, useRef, useState } from 'react';
-import Identity from './components/Identity';
+import { useCallback } from 'react';
+import TitleBar from './components/TitleBar';
+import Hero from './components/Hero';
+import Section from './components/Section';
 import CallStack from './components/CallStack';
 import ParallelRegion from './components/ParallelRegion';
 import Heap from './components/Heap';
 import ScopeChain from './components/ScopeChain';
 import ModuleResolution from './components/ModuleResolution';
 import References from './components/References';
-import InstrumentRail from './components/InstrumentRail';
-import PointerLayer, { type Edge } from './components/PointerLayer';
-import { EMPLOYMENT, PROJECTS } from './data/cv';
+import StackPanel from './components/StackPanel';
+import ScopePanel from './components/ScopePanel';
+import HeapPanel from './components/HeapPanel';
+import StatusBar from './components/StatusBar';
+import { useActiveFrame } from './hooks/useActiveFrame';
+import { useBootSequence } from './hooks/useBootSequence';
+import { EMPLOYMENT } from './data/cv';
+import './components/Rail.css';
 import './App.css';
 
+const FRAME_IDS = EMPLOYMENT.map((e) => e.id);
+
 export default function App() {
-  const [activeId, setActiveId] = useState<string | null>(null);
-  const [edges, setEdges] = useState<Edge[]>([]);
-  const [containerRect, setContainerRect] = useState<DOMRect | null>(null);
+  const [activeId, register] = useActiveFrame(FRAME_IDS);
+  const boot = useBootSequence(EMPLOYMENT.length);
 
-  const shell = useRef<HTMLDivElement>(null);
-  const frameEls = useRef(new Map<string, HTMLElement>());
-  const objectEls = useRef(new Map<string, HTMLElement>());
-
-  const registerObject = useCallback((id: string, el: HTMLElement | null) => {
-    if (el) objectEls.current.set(id, el);
-    else objectEls.current.delete(id);
+  // Selecting a frame in the rail scrolls to it; the observer then picks it
+  // up, so there is only ever one source of truth for what is executing.
+  const jumpTo = useCallback((id: string) => {
+    document.getElementById(`frame-${id}`)?.scrollIntoView({ block: 'center' });
   }, []);
 
-  const recompute = useCallback(() => {
-    if (!shell.current || activeId === null) {
-      setEdges([]);
-      return;
-    }
-    const from = frameEls.current.get(activeId);
-    if (!from) {
-      setEdges([]);
-      return;
-    }
-    const next: Edge[] = PROJECTS.filter((p) => p.employmentId === activeId)
-      .map((p) => objectEls.current.get(p.id))
-      .filter((el): el is HTMLElement => Boolean(el))
-      .map((el) => ({ from: from.getBoundingClientRect(), to: el.getBoundingClientRect() }));
-
-    setContainerRect(shell.current.getBoundingClientRect());
-    setEdges(next);
-  }, [activeId]);
-
-  useLayoutEffect(() => {
-    recompute();
-    window.addEventListener('resize', recompute);
-    return () => window.removeEventListener('resize', recompute);
-  }, [recompute]);
-
-  const handleActivate = useCallback((id: string | null) => setActiveId(id), []);
-
   return (
-    <div className="page">
-      <InstrumentRail activeEmploymentId={activeId} />
+    <div className="ide">
+      <TitleBar dirty={boot.phase !== 'settled'} />
 
-      <main className="content" ref={shell}>
-        <Identity />
-        <PointerLayer edges={edges} containerRect={containerRect} />
+      <div className="ide-body">
+        <aside className="rail" aria-label="Debugger">
+          <StackPanel pushed={boot.pushed} activeId={activeId} onSelect={jumpTo} />
+          <ScopePanel activeId={activeId} />
+          <HeapPanel activeId={activeId} />
+        </aside>
 
-        <div
-          ref={(el) => {
-            if (!el) {
-              frameEls.current.clear();
-              return;
-            }
-            const ids = EMPLOYMENT.map((e) => e.id);
-            el.querySelectorAll<HTMLElement>('.frame').forEach((frameEl, i) => {
-              const id = ids[i];
-              if (id) frameEls.current.set(id, frameEl);
-            });
-          }}
-        >
-          <CallStack onActivate={handleActivate} />
-        </div>
+        <main className="pane">
+          <Hero />
 
-        <ParallelRegion />
-        <Heap activeEmploymentId={activeId} registerRef={registerObject} />
-        <ScopeChain />
-        <ModuleResolution />
-        <References />
-      </main>
+          <Section
+            id="stack"
+            fn="callStack"
+            title="Employment"
+            note="four frames, newest on top"
+          >
+            <CallStack activeId={activeId} register={register} />
+          </Section>
+
+          <Section
+            id="parallel"
+            fn="parallelRegion"
+            title="Overlap"
+            note="two internships and a first full-time role, concurrently"
+          >
+            <ParallelRegion />
+          </Section>
+
+          <Section
+            id="heap"
+            fn="allocate"
+            title="Projects"
+            note="objects these frames allocated"
+          >
+            <Heap activeEmploymentId={activeId} />
+          </Section>
+
+          <Section
+            id="scope"
+            fn="resolve"
+            title="Skills"
+            note="lookup proceeds outward — click any identifier"
+          >
+            <ScopeChain />
+          </Section>
+
+          <Section
+            id="modules"
+            fn="require"
+            title="Education"
+            note="resolved before execution began"
+          >
+            <ModuleResolution />
+          </Section>
+
+          <Section id="refs" fn="references" title="References" note="held elsewhere">
+            <References />
+          </Section>
+        </main>
+      </div>
+
+      <StatusBar activeId={activeId} />
     </div>
   );
 }

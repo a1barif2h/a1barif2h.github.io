@@ -1,54 +1,124 @@
-.frame {
-  --recede: calc(var(--depth) * 10%);
-  color: color-mix(in oklab, var(--ink) calc(100% - var(--recede)), var(--paper));
-  padding: calc(var(--step) * 4) 0;
-  border-top: 1px solid var(--rule-soft);
-  list-style: none;
+.stack { list-style: none; margin: 0; padding: 0; display: grid; gap: calc(var(--step) * 5); }
+
+.fc {
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--rule);
+  border-radius: 4px;
+  padding: calc(var(--step) * 4) calc(var(--step) * 5);
+  min-width: 0;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
 }
 
-.frame:first-child { border-top: 0; }
-
-.frame[data-executing] {
-  background: var(--live-wash);
-  padding-inline: calc(var(--step) * 4);
-  margin-inline: calc(var(--step) * -4);
+/* The frame under the execution line lifts and lights its left edge — the
+   same cue the rail's stack panel uses, so the two read as one mechanism. */
+.fc[data-active] {
+  border-left-color: var(--live);
+  box-shadow: 0 0 0 1px var(--glow), 0 10px 30px -20px var(--glow);
+  transform: translateX(2px);
 }
 
-.frame-head {
+.fc-head {
   display: flex;
   align-items: baseline;
-  gap: calc(var(--step) * 3);
   flex-wrap: wrap;
+  gap: calc(var(--step) * 2);
+  margin-bottom: calc(var(--step) * 3);
 }
 
-.frame h3 { font-size: 1.15rem; }
+.fc-caret { color: var(--tx-3); font-size: 0.8rem; }
+.fc-fn { font-size: 1.12rem; font-weight: 700; }
 
-.frame-state {
-  font-size: 0.72rem;
+.fc-company {
+  font-family: var(--f-body);
+  font-size: 0.92rem;
+  color: var(--tx-2);
+}
+
+.fc-depth { margin-left: auto; font-size: 0.72rem; color: var(--tx-3); }
+
+.fc-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
   color: var(--live);
-  border: 1px solid var(--live);
-  padding: 0 calc(var(--step));
+  border: 1px solid color-mix(in oklab, var(--live) 45%, transparent);
+  background: var(--live-wash);
+  border-radius: 999px;
+  padding: 1px 8px;
+}
+.fc-live i {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--live);
+  animation: loop-pulse 1.4s ease-in-out infinite;
 }
 
-.frame-meta {
-  font-size: 0.8rem;
-  color: var(--ink-3);
-  margin: calc(var(--step)) 0 0;
+.fc-args {
+  display: grid;
+  gap: 2px;
+  margin: 0 0 calc(var(--step) * 4);
+  font-size: 0.78rem;
+  padding-left: 2ch;
 }
+.fc-args > div {
+  display: grid;
+  grid-template-columns: 6rem minmax(0, 1fr);
+  gap: calc(var(--step) * 2);
+}
+.fc-args dt { color: var(--tx-3); }
+.fc-args dd { margin: 0; overflow-wrap: anywhere; }
 
-.frame-roles {
+.fc-roles {
   list-style: none;
-  padding: 0;
-  margin: calc(var(--step) * 3) 0 0;
+  margin: 0 0 calc(var(--step) * 4);
+  padding-left: 2ch;
+  display: grid;
+  gap: calc(var(--step) * 1.5);
 }
+.fc-roles li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: calc(var(--step) * 3);
+}
+.fc-role {
+  font-family: var(--f-mono);
+  font-size: 0.88rem;
+  color: var(--tx);
+  font-weight: 500;
+}
+.fc-role-span { font-size: 0.74rem; }
 
-.frame-role { font-weight: 500; }
-.frame-role-span { font-size: 0.78rem; color: var(--ink-3); }
+.fc-ret { padding-left: 2ch; }
+.fc-ret-line { font-size: 0.82rem; margin: 0; }
 
-.frame-points {
-  margin: calc(var(--step) * 3) 0 0;
-  padding-left: 1.1rem;
+.fc-points {
+  list-style: none;
+  margin: calc(var(--step) * 2) 0;
+  padding-left: 2ch;
+  display: grid;
+  gap: calc(var(--step) * 3);
   max-width: var(--measure);
 }
+.fc-points li {
+  position: relative;
+  padding-left: 1.35rem;
+  color: var(--tx-2);
+  font-size: 0.94rem;
+}
+.fc-points li::before {
+  content: "▪";
+  position: absolute;
+  left: 0;
+  color: var(--kw);
+  opacity: 0.6;
+}
 
-.frame-points li { margin-top: calc(var(--step) * 2); }
+@media (max-width: 620px) {
+  .fc { padding-inline: calc(var(--step) * 3); }
+  .fc-args > div { grid-template-columns: 5rem minmax(0, 1fr); }
+  .fc-depth { margin-left: 0; }
+}

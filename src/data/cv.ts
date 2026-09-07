@@ -1,5 +1,8 @@
 export const NOW = '2026-09';
-export const CV_URL = '/cv.pdf';
+/* The saved filename, not just the path: `cv.pdf` in a stranger's Downloads
+   folder says nothing about whose CV it is. */
+export const CV_FILE = 'Mohammad_Arif_Hossain_CV.pdf';
+export const CV_URL = `/${CV_FILE}`;
 
 export interface Role {
   title: string;
