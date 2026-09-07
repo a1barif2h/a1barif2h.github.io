@@ -68,9 +68,8 @@ describe('skills and references', () => {
     ]);
   });
 
-  it('gives each referee a distinct email address', () => {
-    const emails = REFERENCES.map((r) => r.email);
-    expect(new Set(emails).size).toBe(emails.length);
+  it('publishes no referee email addresses', () => {
+    expect(JSON.stringify(REFERENCES)).not.toContain('@');
   });
 });
 

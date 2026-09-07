@@ -55,7 +55,6 @@ export interface Reference {
   name: string;
   position: string;
   company: string;
-  email: string;
   linkedin: string;
 }
 
@@ -275,14 +274,12 @@ export const REFERENCES: Reference[] = [
     name: 'MD. Nazmul Huda',
     position: 'Tech Lead',
     company: 'Penta Global Ltd.',
-    email: 'nazmulfarhan@gmail.com',
     linkedin: 'https://www.linkedin.com/in/md-nazmul-huda-prince/',
   },
   {
     name: 'A.K.M Ariful Islam Shimul',
     position: 'Senior Java Developer',
     company: 'Penta Global Ltd.',
-    email: 'arif18bari@gmail.com',
     linkedin: 'https://www.linkedin.com/in/arif18bari/',
   },
 ];

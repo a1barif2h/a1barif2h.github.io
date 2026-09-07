@@ -2,22 +2,18 @@ import { render, screen } from '@testing-library/react';
 import References from './References';
 
 describe('References', () => {
-  it('lists both referees with mailto links', () => {
+  it('lists both referees with their roles', () => {
     render(<References />);
-    expect(screen.getByRole('link', { name: 'nazmulfarhan@gmail.com' })).toHaveAttribute(
-      'href',
-      'mailto:nazmulfarhan@gmail.com',
-    );
-    expect(screen.getByRole('link', { name: 'arif18bari@gmail.com' })).toHaveAttribute(
-      'href',
-      'mailto:arif18bari@gmail.com',
-    );
+    expect(screen.getByText('MD. Nazmul Huda')).toBeInTheDocument();
+    expect(screen.getByText('A.K.M Ariful Islam Shimul')).toBeInTheDocument();
   });
 
-  it('gives each referee a distinct email', () => {
+  it('links each referee by LinkedIn rather than publishing an email address', () => {
     render(<References />);
-    const links = screen.getAllByRole('link', { name: /@gmail\.com$/ });
-    const hrefs = links.map((l) => l.getAttribute('href'));
-    expect(new Set(hrefs).size).toBe(hrefs.length);
+    const links = screen.getAllByRole('link', { name: /linkedin/i });
+    expect(links).toHaveLength(2);
+    expect(links[0]).toHaveAttribute('href', 'https://www.linkedin.com/in/md-nazmul-huda-prince/');
+    expect(links[1]).toHaveAttribute('href', 'https://www.linkedin.com/in/arif18bari/');
+    expect(document.querySelectorAll('a[href^="mailto:"]')).toHaveLength(0);
   });
 });
