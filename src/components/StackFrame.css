@@ -1,0 +1,54 @@
+.frame {
+  --recede: calc(var(--depth) * 10%);
+  color: color-mix(in oklab, var(--ink) calc(100% - var(--recede)), var(--paper));
+  padding: calc(var(--step) * 4) 0;
+  border-top: 1px solid var(--rule-soft);
+  list-style: none;
+}
+
+.frame:first-child { border-top: 0; }
+
+.frame[data-executing] {
+  background: var(--live-wash);
+  padding-inline: calc(var(--step) * 4);
+  margin-inline: calc(var(--step) * -4);
+}
+
+.frame-head {
+  display: flex;
+  align-items: baseline;
+  gap: calc(var(--step) * 3);
+  flex-wrap: wrap;
+}
+
+.frame h3 { font-size: 1.15rem; }
+
+.frame-state {
+  font-size: 0.72rem;
+  color: var(--live);
+  border: 1px solid var(--live);
+  padding: 0 calc(var(--step));
+}
+
+.frame-meta {
+  font-size: 0.8rem;
+  color: var(--ink-3);
+  margin: calc(var(--step)) 0 0;
+}
+
+.frame-roles {
+  list-style: none;
+  padding: 0;
+  margin: calc(var(--step) * 3) 0 0;
+}
+
+.frame-role { font-weight: 500; }
+.frame-role-span { font-size: 0.78rem; color: var(--ink-3); }
+
+.frame-points {
+  margin: calc(var(--step) * 3) 0 0;
+  padding-left: 1.1rem;
+  max-width: var(--measure);
+}
+
+.frame-points li { margin-top: calc(var(--step) * 2); }

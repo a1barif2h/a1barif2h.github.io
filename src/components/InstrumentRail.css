@@ -1,0 +1,27 @@
+.rail {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--step) * 4);
+  font-size: 0.75rem;
+}
+
+.rail-readout { margin: 0; }
+.rail-readout dt { color: var(--ink-3); }
+.rail-readout dd { margin: 0 0 calc(var(--step) * 2); color: var(--ink); }
+
+.rail button {
+  background: transparent;
+  border: 1px solid var(--rule);
+  color: var(--ink-2);
+  padding: calc(var(--step)) calc(var(--step) * 2);
+  font-size: 0.72rem;
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+@media (min-width: 900px) {
+  .rail {
+    position: sticky;
+    top: calc(var(--step) * 6);
+  }
+}

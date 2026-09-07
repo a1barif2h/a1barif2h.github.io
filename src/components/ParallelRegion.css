@@ -1,0 +1,45 @@
+.parallel-note {
+  max-width: var(--measure);
+  color: var(--ink-2);
+  margin: calc(var(--step) * 2) 0 calc(var(--step) * 5);
+}
+
+.lanes { list-style: none; padding: 0; margin: 0; }
+
+.lane { margin-top: calc(var(--step) * 3); }
+
+.lane-label {
+  display: flex;
+  justify-content: space-between;
+  gap: calc(var(--step) * 3);
+  font-size: 0.85rem;
+}
+
+.lane-company { font-weight: 500; }
+.lane-period { color: var(--ink-3); font-size: 0.78rem; }
+
+.lane-track {
+  position: relative;
+  height: 14px;
+  margin-top: calc(var(--step));
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.lane-bar {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--accent);
+  border-radius: 1px;
+}
+
+.lane[data-commitment="full-time"] .lane-bar { height: 10px; }
+
+.lane[data-commitment="part-time"] .lane-bar {
+  height: 5px;
+  background: color-mix(in oklab, var(--accent) 45%, var(--paper));
+}
+
+.lane[data-open] .lane-bar {
+  background: linear-gradient(to right, var(--accent), transparent);
+}
