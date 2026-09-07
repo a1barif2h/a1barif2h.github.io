@@ -31,13 +31,12 @@ jobs:
         with:
           path: dist
 
-  # Publishing is deliberately manual until GitHub Pages is enabled for this
-  # repository. Pushes to main still run typecheck, the full test suite and a
-  # build above; only this job is gated, so main stays verified without
-  # publishing anything until someone runs the workflow by hand.
+  # The site is live, so main publishes on every push. The build job above
+  # gates it: typecheck and the full test suite must pass before anything
+  # reaches the public URL. workflow_dispatch stays available for
+  # republishing without a code change.
   deploy:
     needs: build
-    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
