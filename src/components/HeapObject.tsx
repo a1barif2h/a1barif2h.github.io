@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import type { Project } from '../data/cv';
 
 interface Props {
@@ -27,8 +28,15 @@ export default function HeapObject({ project, allocatedBy, active, registerRef }
           : 'independent client work, no allocating frame'}
       </p>
 
-      <p className="obj-stack mono scroll-x" data-testid="stack-literal" tabIndex={0}>
-        [{project.stack.map((s) => `'${s}'`).join(', ')}]
+      <p className="obj-stack mono" data-testid="stack-literal">
+        [
+        {project.stack.map((s, i) => (
+          <Fragment key={s}>
+            <span className="obj-stack-item">{`'${s}'`}</span>
+            {i < project.stack.length - 1 ? ', ' : ''}
+          </Fragment>
+        ))}
+        ]
       </p>
 
       <ul className="obj-features">

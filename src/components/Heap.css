@@ -30,8 +30,12 @@
   font-size: 0.74rem;
   color: var(--accent);
   margin: calc(var(--step) * 3) 0 0;
+}
+
+/* Each entry stays whole; lines break only between entries, so a name like
+   'PostgreSQL 17' never splits across two lines. */
+.obj-stack-item {
   white-space: nowrap;
-  padding-bottom: calc(var(--step));
 }
 
 .obj-features {
