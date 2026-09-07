@@ -1,48 +1,71 @@
 .heap {
   display: grid;
   gap: calc(var(--step) * 4);
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
-  margin-top: calc(var(--step) * 4);
-}
-
-.obj {
-  background: var(--sheet);
-  border: 1px solid var(--rule);
-  padding: calc(var(--step) * 4);
-  transition: border-color 200ms ease, box-shadow 200ms ease;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
   min-width: 0;
 }
 
+.obj {
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: calc(var(--step) * 4);
+  min-width: 0;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.obj:hover { border-color: var(--tx-3); }
+
 .obj[data-active] {
   border-color: var(--live);
-  box-shadow: 0 0 0 1px var(--live);
+  box-shadow: 0 0 0 1px var(--glow), 0 12px 34px -24px var(--glow);
+  transform: translateY(-2px);
 }
 
-.obj h3 { font-size: 1.02rem; }
-
-.obj-meta, .obj-alloc {
-  font-size: 0.76rem;
-  color: var(--ink-3);
-  margin: calc(var(--step)) 0 0;
+.obj-addr-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: calc(var(--step) * 3);
+  font-size: 0.7rem;
+  margin: 0 0 calc(var(--step) * 2);
 }
+.obj-period { margin-left: auto; }
+
+.obj h3 {
+  font-size: 1.06rem;
+  font-weight: 700;
+  margin-bottom: calc(var(--step) * 2);
+}
+
+.obj-alloc { font-size: 0.74rem; margin: 0 0 calc(var(--step) * 3); }
+.obj-alloc-link { text-decoration: none; border-bottom: 1px dotted currentColor; }
 
 .obj-stack {
-  font-size: 0.74rem;
-  color: var(--accent);
-  margin: calc(var(--step) * 3) 0 0;
+  font-size: 0.73rem;
+  line-height: 1.75;
+  margin: 0 0 calc(var(--step) * 4);
 }
 
 /* Each entry stays whole; lines break only between entries, so a name like
    'PostgreSQL 17' never splits across two lines. */
-.obj-stack-item {
-  white-space: nowrap;
-}
+.obj-stack-item { white-space: nowrap; }
 
 .obj-features {
-  margin: calc(var(--step) * 3) 0 0;
-  padding-left: 1.1rem;
-  font-size: 0.92rem;
-  color: var(--ink-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: calc(var(--step) * 2.5);
+  font-size: 0.9rem;
+  color: var(--tx-2);
 }
-
-.obj-features li { margin-top: calc(var(--step) * 2); }
+.obj-features li { position: relative; padding-left: 1.2rem; }
+.obj-features li::before {
+  content: "·";
+  position: absolute;
+  left: 0.35rem;
+  color: var(--kw);
+  font-weight: 700;
+}

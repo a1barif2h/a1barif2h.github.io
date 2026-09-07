@@ -23,8 +23,7 @@ export default function ParallelRegion() {
   const ordered = [...early].sort((a, b) => toMonths(a.start) - toMonths(b.start));
 
   return (
-    <section aria-labelledby="parallel-heading" className="parallel">
-      <h2 id="parallel-heading">Parallel region, settled</h2>
+    <div className="parallel">
       <p className="parallel-note">
         {cap(WORDS[early.length])} roles across {WORDS[months]} months, peaking at{' '}
         <strong>{WORDS[peak.count]} at once</strong>. Two were part-time
@@ -63,6 +62,6 @@ export default function ParallelRegion() {
           );
         })}
       </ol>
-    </section>
+    </div>
   );
 }

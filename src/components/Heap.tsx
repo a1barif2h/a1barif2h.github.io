@@ -12,19 +12,17 @@ export default function Heap({ activeEmploymentId = null, registerRef }: Props) 
     id === null ? null : (EMPLOYMENT.find((e) => e.id === id)?.company ?? null);
 
   return (
-    <section aria-labelledby="heap-heading">
-      <h2 id="heap-heading">Heap</h2>
-      <div className="heap">
-        {PROJECTS.map((p) => (
-          <HeapObject
-            key={p.id}
-            project={p}
-            allocatedBy={companyOf(p.employmentId)}
-            active={activeEmploymentId !== null && p.employmentId === activeEmploymentId}
-            registerRef={registerRef}
-          />
-        ))}
-      </div>
-    </section>
+    <div className="heap">
+      {PROJECTS.map((p) => (
+        <HeapObject
+          key={p.id}
+          project={p}
+          allocatedBy={companyOf(p.employmentId)}
+          allocatorId={p.employmentId}
+          active={activeEmploymentId !== null && p.employmentId === activeEmploymentId}
+          registerRef={registerRef}
+        />
+      ))}
+    </div>
   );
 }

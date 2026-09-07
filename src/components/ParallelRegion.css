@@ -1,45 +1,57 @@
+.parallel { min-width: 0; }
+
 .parallel-note {
   max-width: var(--measure);
-  color: var(--ink-2);
-  margin: calc(var(--step) * 2) 0 calc(var(--step) * 5);
+  color: var(--tx-2);
+  margin: 0 0 calc(var(--step) * 6);
 }
+.parallel-note strong { color: var(--live); font-weight: 600; }
 
-.lanes { list-style: none; padding: 0; margin: 0; }
-
-.lane { margin-top: calc(var(--step) * 3); }
+.lanes { list-style: none; margin: 0; padding: 0; display: grid; gap: calc(var(--step) * 4); }
 
 .lane-label {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: baseline;
   gap: calc(var(--step) * 3);
-  font-size: 0.85rem;
+  margin-bottom: calc(var(--step) * 1.5);
 }
-
-.lane-company { font-weight: 500; }
-.lane-period { color: var(--ink-3); font-size: 0.78rem; }
+.lane-company { font-family: var(--f-mono); font-size: 0.86rem; }
+.lane-period { margin-left: auto; font-size: 0.72rem; color: var(--tx-3); }
 
 .lane-track {
   position: relative;
-  height: 14px;
-  margin-top: calc(var(--step));
-  border-bottom: 1px solid var(--rule-soft);
+  height: 8px;
+  background: var(--panel-2);
+  border-radius: 999px;
+  overflow: hidden;
 }
 
 .lane-bar {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: var(--accent);
-  border-radius: 1px;
+  top: 0;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--kw);
+  transform-origin: left center;
+  animation: lane-grow 0.75s cubic-bezier(0.22, 1, 0.36, 1) backwards;
 }
-
-.lane[data-commitment="full-time"] .lane-bar { height: 10px; }
+@keyframes lane-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
 .lane[data-commitment="part-time"] .lane-bar {
-  height: 5px;
-  background: color-mix(in oklab, var(--accent) 45%, var(--paper));
+  background: repeating-linear-gradient(
+    115deg,
+    var(--num) 0 6px,
+    color-mix(in oklab, var(--num) 45%, transparent) 6px 12px
+  );
 }
 
+/* An open-ended role fades out at the axis edge instead of stopping flush,
+   which would read as an end date it does not have. */
 .lane[data-open] .lane-bar {
-  background: linear-gradient(to right, var(--accent), transparent);
+  background: linear-gradient(to right, var(--live), transparent);
+}
+
+@media (max-width: 620px) {
+  .lane-period { margin-left: 0; }
 }

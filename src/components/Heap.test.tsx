@@ -11,7 +11,7 @@ describe('Heap', () => {
     render(<Heap />);
     const beza = screen.getByRole('article', { name: /BEZA One Stop Service/i });
     const stack = within(beza).getByTestId('stack-literal');
-    expect(stack.textContent).toMatch(/^\['React', 'Redux'/);
+    expect(stack.textContent).toMatch(/^stack: \['React', 'Redux'/);
     expect(stack.textContent).not.toContain('·');
   });
 
@@ -24,7 +24,8 @@ describe('Heap', () => {
   it('marks the independent client project as having no allocating frame', () => {
     render(<Heap />);
     const badlao = screen.getByRole('article', { name: /Badlao/i });
-    expect(within(badlao).getByText(/independent client/i)).toBeInTheDocument();
+    const alloc = within(badlao).getByText(/allocatedBy/).closest('p');
+    expect(alloc?.textContent).toMatch(/allocatedBy:\s*null/);
   });
 
   it('highlights only the objects allocated by the active frame', () => {

@@ -3,9 +3,7 @@ import './Listing.css';
 
 export default function References() {
   return (
-    <section aria-labelledby="refs-heading">
-      <h2 id="refs-heading">References</h2>
-      <div className="listing">
+    <div className="listing">
         {REFERENCES.map((r) => (
           <div key={r.linkedin} className="entry">
             <h3>{r.name}</h3>
@@ -19,7 +17,6 @@ export default function References() {
             </ul>
           </div>
         ))}
-      </div>
-    </section>
+    </div>
   );
 }

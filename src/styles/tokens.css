@@ -1,50 +1,95 @@
+/* Debugger palette. Light is the base; dark redefines only tokens.
+   Syntax hues are the page's only colour: violet keyword, amber string,
+   cyan number, green function. Neutrals carry a slight violet bias so
+   they read as chosen rather than inherited. */
 :root {
-  --paper: #F6F7F4;
-  --sheet: #FFFFFF;
-  --ink: #16201C;
-  --ink-2: #4A554F;
-  --ink-3: #5F6A63;
-  --rule: #D7DDD6;
-  --rule-soft: #E7EBE5;
-  --accent: #1E5B45;
-  --accent-2: #2F7A5E;
-  --live: #8A5713;
-  --live-wash: #FBF2E2;
+  --bg: #FAF9FC;
+  --panel: #FFFFFF;
+  --panel-2: #F2F1F7;
+  --panel-3: #E9E8F1;
+  --chrome: #EFEDF4;
 
-  --f-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --rule: #D8D5E4;
+  --rule-soft: #E7E5EF;
+
+  --tx: #14121C;
+  --tx-2: #4B4860;
+  --tx-3: #625E78;
+
+  --kw: #6D30C4;
+  --str: #8A5000;
+  --num: #0A6273;
+  --fn: #0F6A46;
+  --com: #6A6680;
+  --punc: #56526B;
+
+  --live: #9A4A00;
+  --live-wash: #FDF0E2;
+  --sel: #E4DDF6;
+  --glow: rgba(109, 48, 196, 0.16);
+
+  --f-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --f-body: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 
-  --rail: 190px;
-  --measure: 65ch;
+  --rail: 310px;
+  --gutter: 3.25rem;
+  --measure: 68ch;
   --step: 0.35rem;
+  --bar: 34px;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --paper: #0F1411;
-    --sheet: #161C18;
-    --ink: #E6EBE6;
-    --ink-2: #A8B3AC;
-    --ink-3: #838E87;
-    --rule: #2A332D;
-    --rule-soft: #212823;
-    --accent: #6FBF97;
-    --accent-2: #4FA37B;
-    --live: #E0A44A;
-    --live-wash: #2A2115;
+    --bg: #0A0D14;
+    --panel: #111621;
+    --panel-2: #161C29;
+    --panel-3: #1D2434;
+    --chrome: #0D1119;
+
+    --rule: #242C3D;
+    --rule-soft: #1A2130;
+
+    --tx: #DFE4F0;
+    --tx-2: #9BA6BE;
+    --tx-3: #7C8AA3;
+
+    --kw: #C08CFF;
+    --str: #FFB86B;
+    --num: #6FD5E8;
+    --fn: #7EE0A8;
+    --com: #78849A;
+    --punc: #8B97AE;
+
+    --live: #FFB86B;
+    --live-wash: #2A1E10;
+    --sel: #212A3D;
+    --glow: rgba(192, 140, 255, 0.22);
   }
 }
 
 :root[data-theme="dark"] {
-  --paper: #0F1411;
-  --sheet: #161C18;
-  --ink: #E6EBE6;
-  --ink-2: #A8B3AC;
-  --ink-3: #838E87;
-  --rule: #2A332D;
-  --rule-soft: #212823;
-  --accent: #6FBF97;
-  --accent-2: #4FA37B;
-  --live: #E0A44A;
-  --live-wash: #2A2115;
+  --bg: #0A0D14;
+  --panel: #111621;
+  --panel-2: #161C29;
+  --panel-3: #1D2434;
+  --chrome: #0D1119;
+
+  --rule: #242C3D;
+  --rule-soft: #1A2130;
+
+  --tx: #DFE4F0;
+  --tx-2: #9BA6BE;
+  --tx-3: #7C8AA3;
+
+  --kw: #C08CFF;
+  --str: #FFB86B;
+  --num: #6FD5E8;
+  --fn: #7EE0A8;
+  --com: #78849A;
+  --punc: #8B97AE;
+
+  --live: #FFB86B;
+  --live-wash: #2A1E10;
+  --sel: #212A3D;
+  --glow: rgba(192, 140, 255, 0.22);
 }

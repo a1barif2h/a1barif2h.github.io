@@ -1,0 +1,42 @@
+.fn-block { padding-block: calc(var(--step) * 8); min-width: 0; }
+
+.fn-sig {
+  display: block;
+  font-size: 1.06rem;
+  font-weight: 500;
+  margin-bottom: calc(var(--step) * 6);
+}
+
+.fn-caret {
+  display: inline-block;
+  color: var(--tx-3);
+  font-size: 0.8em;
+  width: 1.4ch;
+}
+
+.fn-note {
+  display: inline-block;
+  font-size: 0.78rem;
+  margin-left: 2ch;
+  font-family: var(--f-mono);
+}
+
+/* The body is indented by the gutter and carries the block's guide rule,
+   the way a folded region does in an editor. */
+.fn-body {
+  padding-left: calc(var(--step) * 6);
+  border-left: 1px solid var(--rule-soft);
+  margin-left: calc(var(--step) * 1.5);
+  min-width: 0;
+}
+
+.fn-close {
+  font-size: 1.06rem;
+  margin: calc(var(--step) * 5) 0 0;
+  padding-left: calc(var(--step) * 1.5);
+}
+
+@media (max-width: 620px) {
+  .fn-body { padding-left: calc(var(--step) * 3); }
+  .fn-note { display: block; margin-left: 2ch; }
+}
