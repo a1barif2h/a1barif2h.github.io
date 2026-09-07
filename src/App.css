@@ -12,6 +12,8 @@
   gap: calc(var(--step) * 12);
 }
 
+.content > section { min-width: 0; }
+
 .content > section > h2 {
   font-size: 0.95rem;
   color: var(--ink-3);

@@ -10,6 +10,7 @@
   border: 1px solid var(--rule);
   padding: calc(var(--step) * 4);
   transition: border-color 200ms ease, box-shadow 200ms ease;
+  min-width: 0;
 }
 
 .obj[data-active] {
