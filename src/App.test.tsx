@@ -1,5 +1,6 @@
 import { render, screen, within } from '@testing-library/react';
 import App from './App';
+import { CV_FILE, CV_URL } from './data/cv';
 
 describe('App', () => {
   it('renders the subject name as the page heading', () => {
@@ -62,6 +63,17 @@ describe('App', () => {
     const status = screen.getByTestId('status-bar');
     expect(status).toHaveTextContent(/executing/i);
     expect(status).toHaveTextContent(/global/i);
+  });
+
+  it('saves the CV under a name that identifies whose it is', () => {
+    render(<App />);
+    const links = screen.getAllByRole('link', { name: /CV/i });
+    expect(links.length).toBeGreaterThan(0);
+    links.forEach((a) => {
+      expect(a).toHaveAttribute('href', CV_URL);
+      expect(a).toHaveAttribute('download', CV_FILE);
+    });
+    expect(CV_FILE).toMatch(/Mohammad_Arif_Hossain/);
   });
 
   it('offers a theme toggle', () => {

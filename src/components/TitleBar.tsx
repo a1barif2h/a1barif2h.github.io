@@ -1,4 +1,4 @@
-import { CV_URL, IDENTITY } from '../data/cv';
+import { CV_URL, CV_FILE, IDENTITY } from '../data/cv';
 import ThemeToggle from './ThemeToggle';
 import './TitleBar.css';
 
@@ -18,7 +18,7 @@ export default function TitleBar({ dirty }: { dirty: boolean }) {
 
       <div className="bar-actions">
         <ThemeToggle />
-        <a className="bar-cv mono" href={CV_URL} download>
+        <a className="bar-cv mono" href={CV_URL} download={CV_FILE}>
           <span aria-hidden="true">↓</span> CV.pdf
         </a>
         <a className="bar-ico mono" href={IDENTITY.github} aria-label="GitHub">GH</a>

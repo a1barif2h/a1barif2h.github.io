@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import portrait from '../assets/portrait.webp';
-import { IDENTITY, EMPLOYMENT, PROJECTS, CV_URL } from '../data/cv';
+import { IDENTITY, EMPLOYMENT, PROJECTS, CV_URL, CV_FILE } from '../data/cv';
 import { toMonths, yearsSince } from '../lib/timeline';
 import './Hero.css';
 
@@ -79,7 +79,7 @@ export default function Hero() {
       <div className="hero-out" style={{ '--i': 12 } as React.CSSProperties}>
         <p className="hero-summary">{IDENTITY.summary}</p>
         <nav className="hero-cta" aria-label="Contact">
-          <a className="cta cta-1" href={CV_URL} download>Download CV</a>
+          <a className="cta cta-1" href={CV_URL} download={CV_FILE}>Download CV</a>
           <a className="cta" href={`mailto:${IDENTITY.email}`}>Email</a>
           <a className="cta" href={IDENTITY.github}>GitHub</a>
           <a className="cta" href={IDENTITY.linkedin}>LinkedIn</a>
